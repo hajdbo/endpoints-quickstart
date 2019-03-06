@@ -25,8 +25,8 @@ main() {
   fi
   # Because our included app uses query string parameters, we can include
   # them directly in the URL.
-  #QUERY="curl \"https://${project_id}.appspot.com/airportName?iataCode=${IATA_CODE}\""
-  QUERY="curl \"https://${project_id}.appspot.com/addDevice?deviceString=${IATA_CODE}\""
+  #QUERY="curl \"https://${project_id}.appspot.com/airportName?iataCode=${DEVICESTR}\""
+  QUERY="curl \"https://${project_id}.appspot.com/addDevice?deviceString=${DEVICESTR}\""
   # First, (maybe) print the command so the user can see what's being executed.
   if [[ "$QUIET" == "false" ]]; then
     echo "$QUERY"
@@ -39,16 +39,16 @@ main() {
 }
 
 # Defaults.
-IATA_CODE="SFO"
+DEVICESTR="test1|MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+IUEdJ2BfKXH/Jig+YZx3+xW3g2kG0R69Qeug1gOJbAW3LF5f7v8Nj1vc9UvOLXQ9cs3q+3pPlWqC0PTvS9UWg=="
 QUIET="false"
 
 if [[ "$#" == 0 ]]; then
   : # Use defaults.
 elif [[ "$#" == 1 ]]; then
-  IATA_CODE="$1"
+  DEVICESTR="$1"
 elif [[ "$#" == 2 ]]; then
   # "Quiet mode" won't print the curl command.
-  IATA_CODE="$1"
+  DEVICESTR="$1"
   QUIET="true"
 else
   echo "Wrong number of arguments specified."
