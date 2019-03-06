@@ -14,7 +14,7 @@ class CreateIotDevice(object):
       pass
 
 
-  def get_client():
+  def get_client(self):
   #def get_client(service_account_json):
     """Returns an authorized API client by discovering the IoT API and creating
     a service object using the service account credentials JSON."""
@@ -54,7 +54,26 @@ class CreateIotDevice(object):
             project_id, cloud_region, registry_id)
 
     #client = get_client(service_account_json)
-    client = get_client()
+    #client = get_client()
+    api_scopes = ['https://www.googleapis.com/auth/cloud-platform']
+    api_version = 'v1'
+    discovery_api = 'https://cloudiot.googleapis.com/$discovery/rest'
+    service_name = 'cloudiotcore'
+
+    #credentials = service_account.Credentials.from_service_account_file(
+    #        service_account_json)
+    #scoped_credentials = credentials.with_scopes(api_scopes)
+
+    discovery_url = '{}?version={}'.format(
+             discovery_api, api_version)
+
+    client = discovery.build(
+             service_name,
+             api_version,
+             discoveryServiceUrl=discovery_url)
+
+
+
     #with io.open(public_key_file) as f:
     #    public_key = f.read()
 
