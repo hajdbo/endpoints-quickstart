@@ -30,7 +30,7 @@ main() {
   ./deploy_api.sh
   ./deploy_app.sh
   response=$(./query_api.sh BOS quiet)
-  if [[ "$response" != "General Edward Lawrence Logan International Airport" ]]; then
+  if [[ "$response" != "Device added" ]]; then
     exit 1
   fi
 }
