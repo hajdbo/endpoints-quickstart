@@ -22,9 +22,9 @@ class CreateIotDevice(object):
     discovery_api = 'https://cloudiot.googleapis.com/$discovery/rest'
     service_name = 'cloudiotcore'
 
-    credentials = service_account.Credentials.from_service_account_file(
-            service_account_json)
-    scoped_credentials = credentials.with_scopes(api_scopes)
+    #credentials = service_account.Credentials.from_service_account_file(
+    #        service_account_json)
+    #scoped_credentials = credentials.with_scopes(api_scopes)
 
     discovery_url = '{}?version={}'.format(
             discovery_api, api_version)
@@ -33,7 +33,8 @@ class CreateIotDevice(object):
             service_name,
             api_version,
             discoveryServiceUrl=discovery_url,
-            credentials=scoped_credentials)
+            #credentials=scoped_credentials
+            )
 
 
   def create_device(self, device_string):
