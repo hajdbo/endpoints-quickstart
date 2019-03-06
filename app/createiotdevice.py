@@ -48,7 +48,7 @@ class CreateIotDevice(object):
     registry_name = 'projects/{}/locations/{}/registries/{}'.format(
             project_id, cloud_region, registry_id)
 
-    client = this.get_client(service_account_json)
+    client = self.get_client(service_account_json)
 
     #with io.open(public_key_file) as f:
     #    public_key = f.read()
