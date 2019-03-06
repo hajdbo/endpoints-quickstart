@@ -65,7 +65,8 @@ class CreateIotDevice(object):
     }
 
     devices = client.projects().locations().registries().devices()
-    return devices.create(parent=registry_name, body=device_template).execute()
+    devices.create(parent=registry_name, body=device_template).execute()
+    return "ca a marche"
 
 # POST https://cloudiot.googleapis.com/v1/{parent=projects/*/locations/*/registries/*}/devices
 # parent	string
