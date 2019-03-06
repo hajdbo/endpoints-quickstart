@@ -14,8 +14,7 @@ class CreateIotDevice(object):
       pass
 
 
-  def get_client(self):
-  #def get_client(service_account_json):
+  def get_client(self, service_account_json):
     """Returns an authorized API client by discovering the IoT API and creating
     a service object using the service account credentials JSON."""
     api_scopes = ['https://www.googleapis.com/auth/cloud-platform']
@@ -23,9 +22,9 @@ class CreateIotDevice(object):
     discovery_api = 'https://cloudiot.googleapis.com/$discovery/rest'
     service_name = 'cloudiotcore'
 
-    #credentials = service_account.Credentials.from_service_account_file(
-    #        service_account_json)
-    #scoped_credentials = credentials.with_scopes(api_scopes)
+    credentials = service_account.Credentials.from_service_account_file(
+            service_account_json)
+    scoped_credentials = credentials.with_scopes(api_scopes)
 
     discovery_url = '{}?version={}'.format(
             discovery_api, api_version)
@@ -33,19 +32,15 @@ class CreateIotDevice(object):
     return discovery.build(
             service_name,
             api_version,
-            discoveryServiceUrl=discovery_url)
-    #return discovery.build(
-    #        service_name,
-    #        api_version,
-    #        discoveryServiceUrl=discovery_url,
-    #        credentials=scoped_credentials)
+            discoveryServiceUrl=discovery_url,
+            credentials=scoped_credentials)
 
 
   def create_device(self, device_string):
     (device_id, public_key) = device_string.split('|')
     public_key = "-----BEGIN PUBLIC KEY-----\n" + public_key + "\n-----END PUBLIC KEY-----\n"
 
-    #service_account_json=""
+    service_account_json="serviceaccountkey.json"
     project_id="altostrat-demo"
     cloud_region="europe-west1"
     registry_id="altostrat-iot-power-registry"
@@ -53,31 +48,11 @@ class CreateIotDevice(object):
     registry_name = 'projects/{}/locations/{}/registries/{}'.format(
             project_id, cloud_region, registry_id)
 
-    #client = get_client(service_account_json)
-    #client = get_client()
-    api_scopes = ['https://www.googleapis.com/auth/cloud-platform']
-    api_version = 'v1'
-    discovery_api = 'https://cloudiot.googleapis.com/$discovery/rest'
-    service_name = 'cloudiotcore'
-
-    #credentials = service_account.Credentials.from_service_account_file(
-    #        service_account_json)
-    #scoped_credentials = credentials.with_scopes(api_scopes)
-
-    discovery_url = '{}?version={}'.format(
-             discovery_api, api_version)
-
-    client = discovery.build(
-             service_name,
-             api_version,
-             discoveryServiceUrl=discovery_url)
-
-
+    client = this.get_client(service_account_json)
 
     #with io.open(public_key_file) as f:
     #    public_key = f.read()
 
-    # Note: You can have multiple credentials associated with a device.
     device_template = {
         'id': device_id,
         'credentials': [{
